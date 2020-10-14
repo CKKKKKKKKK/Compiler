@@ -2,8 +2,10 @@
 /* Lab2 Attention: You are only allowed to add code in this file and start at Line 26.*/
 #include <string.h>
 #include "util.h"
-#include "tokens.h"
 #include "errormsg.h"
+#include "symbol.h"
+#include "absyn.h"
+#include "y.tab.h"
 
 int charPos=1;
 
@@ -38,7 +40,7 @@ char *getstr(const char *str)
 
   if (len == 2) 
   {
-    buf = "(null)";
+    buf = "";
     return buf;
   }
 
@@ -162,7 +164,7 @@ char *getstr(const char *str)
   adjust(); 
   yylval.sval = String(yytext); 
   return ID;
-}
+  }
 <INITIAL>[0-9]+ {
   adjust(); 
   yylval.ival = atoi(yytext); 
