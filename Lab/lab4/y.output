@@ -1,6 +1,12 @@
 State 1 conflicts: 1 shift/reduce
 State 28 conflicts: 1 shift/reduce
 State 31 conflicts: 1 shift/reduce
+State 83 conflicts: 12 shift/reduce
+State 91 conflicts: 13 shift/reduce
+State 92 conflicts: 12 shift/reduce
+State 116 conflicts: 12 shift/reduce
+State 117 conflicts: 12 shift/reduce
+State 133 conflicts: 12 shift/reduce
 
 
 Grammar
@@ -1667,6 +1673,18 @@ State 83
     AND     shift, and go to state 46
     OR      shift, and go to state 47
 
+    PLUS      [reduce using rule 4 (exp)]
+    MINUS     [reduce using rule 4 (exp)]
+    TIMES     [reduce using rule 4 (exp)]
+    DIVIDE    [reduce using rule 4 (exp)]
+    EQ        [reduce using rule 4 (exp)]
+    NEQ       [reduce using rule 4 (exp)]
+    LT        [reduce using rule 4 (exp)]
+    LE        [reduce using rule 4 (exp)]
+    GT        [reduce using rule 4 (exp)]
+    GE        [reduce using rule 4 (exp)]
+    AND       [reduce using rule 4 (exp)]
+    OR        [reduce using rule 4 (exp)]
     $default  reduce using rule 4 (exp)
 
 
@@ -1787,6 +1805,19 @@ State 91
     OR      shift, and go to state 47
     ELSE    shift, and go to state 104
 
+    PLUS      [reduce using rule 5 (exp)]
+    MINUS     [reduce using rule 5 (exp)]
+    TIMES     [reduce using rule 5 (exp)]
+    DIVIDE    [reduce using rule 5 (exp)]
+    EQ        [reduce using rule 5 (exp)]
+    NEQ       [reduce using rule 5 (exp)]
+    LT        [reduce using rule 5 (exp)]
+    LE        [reduce using rule 5 (exp)]
+    GT        [reduce using rule 5 (exp)]
+    GE        [reduce using rule 5 (exp)]
+    AND       [reduce using rule 5 (exp)]
+    OR        [reduce using rule 5 (exp)]
+    ELSE      [reduce using rule 5 (exp)]
     $default  reduce using rule 5 (exp)
 
 
@@ -1819,6 +1850,18 @@ State 92
     AND     shift, and go to state 46
     OR      shift, and go to state 47
 
+    PLUS      [reduce using rule 7 (exp)]
+    MINUS     [reduce using rule 7 (exp)]
+    TIMES     [reduce using rule 7 (exp)]
+    DIVIDE    [reduce using rule 7 (exp)]
+    EQ        [reduce using rule 7 (exp)]
+    NEQ       [reduce using rule 7 (exp)]
+    LT        [reduce using rule 7 (exp)]
+    LE        [reduce using rule 7 (exp)]
+    GT        [reduce using rule 7 (exp)]
+    GE        [reduce using rule 7 (exp)]
+    AND       [reduce using rule 7 (exp)]
+    OR        [reduce using rule 7 (exp)]
     $default  reduce using rule 7 (exp)
 
 
@@ -2157,6 +2200,18 @@ State 116
     AND     shift, and go to state 46
     OR      shift, and go to state 47
 
+    PLUS      [reduce using rule 29 (exp)]
+    MINUS     [reduce using rule 29 (exp)]
+    TIMES     [reduce using rule 29 (exp)]
+    DIVIDE    [reduce using rule 29 (exp)]
+    EQ        [reduce using rule 29 (exp)]
+    NEQ       [reduce using rule 29 (exp)]
+    LT        [reduce using rule 29 (exp)]
+    LE        [reduce using rule 29 (exp)]
+    GT        [reduce using rule 29 (exp)]
+    GE        [reduce using rule 29 (exp)]
+    AND       [reduce using rule 29 (exp)]
+    OR        [reduce using rule 29 (exp)]
     $default  reduce using rule 29 (exp)
 
 
@@ -2189,6 +2244,18 @@ State 117
     AND     shift, and go to state 46
     OR      shift, and go to state 47
 
+    PLUS      [reduce using rule 6 (exp)]
+    MINUS     [reduce using rule 6 (exp)]
+    TIMES     [reduce using rule 6 (exp)]
+    DIVIDE    [reduce using rule 6 (exp)]
+    EQ        [reduce using rule 6 (exp)]
+    NEQ       [reduce using rule 6 (exp)]
+    LT        [reduce using rule 6 (exp)]
+    LE        [reduce using rule 6 (exp)]
+    GT        [reduce using rule 6 (exp)]
+    GE        [reduce using rule 6 (exp)]
+    AND       [reduce using rule 6 (exp)]
+    OR        [reduce using rule 6 (exp)]
     $default  reduce using rule 6 (exp)
 
 
@@ -2421,6 +2488,18 @@ State 133
     AND     shift, and go to state 46
     OR      shift, and go to state 47
 
+    PLUS      [reduce using rule 8 (exp)]
+    MINUS     [reduce using rule 8 (exp)]
+    TIMES     [reduce using rule 8 (exp)]
+    DIVIDE    [reduce using rule 8 (exp)]
+    EQ        [reduce using rule 8 (exp)]
+    NEQ       [reduce using rule 8 (exp)]
+    LT        [reduce using rule 8 (exp)]
+    LE        [reduce using rule 8 (exp)]
+    GT        [reduce using rule 8 (exp)]
+    GE        [reduce using rule 8 (exp)]
+    AND       [reduce using rule 8 (exp)]
+    OR        [reduce using rule 8 (exp)]
     $default  reduce using rule 8 (exp)
 
 
