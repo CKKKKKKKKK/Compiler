@@ -55,12 +55,16 @@ void yyerror(char *s)
   BREAK NIL
   FUNCTION VAR TYPE 
 
+%nonassoc OF DO
+%left THEN
+%right ELSE
+%nonassoc ASSIGN
 %left OR
 %left AND
-%nonassoc EQ NEQ LT GT LE GE
+%nonassoc EQ NEQ LT GT LE GE 
 %left PLUS MINUS
 %left TIMES DIVIDE
-%left UMINUS
+%right UMINUS
 
 %type <exp> exp program seqexp
 %type <var> lvalue
@@ -89,7 +93,7 @@ program: exp                              {absyn_root=$1;}
 exp: LPAREN seqexp RPAREN                 {$$=$2;}
 	| LET decs IN seqexp END              {$$=A_LetExp(EM_tokPos, $2, $4);}
 	| lvalue ASSIGN exp                   {$$=A_AssignExp(EM_tokPos, $1, $3);}
-	| IF exp THEN exp                     {$$=A_IfExp(EM_tokPos, $2, $4, A_NilExp(EM_tokPos));}
+	| IF exp THEN exp                     {$$=A_IfExp(EM_tokPos, $2, $4, NULL);}
 	| IF exp THEN exp ELSE exp            {$$=A_IfExp(EM_tokPos, $2, $4, $6);}
 	| WHILE exp DO exp                    {$$=A_WhileExp(EM_tokPos, $2, $4);}
 	| FOR ID ASSIGN exp TO exp DO exp     {$$=A_ForExp(EM_tokPos, S_Symbol($2), $4, $6, $8);}
@@ -148,6 +152,7 @@ tydecs: tydec                             {$$=A_NametyList($1, NULL);}
 
 vardec: VAR  ID ASSIGN exp                {$$=A_VarDec(EM_tokPos, S_Symbol($2), NULL, $4);}
 	| VAR  ID COLON ID ASSIGN exp         {$$=A_VarDec(EM_tokPos, S_Symbol($2), S_Symbol($4), $6);}
+	
 fundec: FUNCTION  ID LPAREN tyfields RPAREN EQ exp        {$$=A_Fundec(EM_tokPos, S_Symbol($2), $4, NULL, $7);}
 	| FUNCTION  ID LPAREN tyfields RPAREN COLON ID EQ exp {$$=A_Fundec(EM_tokPos, S_Symbol($2), $4, S_Symbol($7), $9);}
 	
@@ -155,7 +160,7 @@ fundecs: fundec                           {$$=A_FundecList($1, NULL);}
 	| fundec fundecs                      {$$=A_FundecList($1, $2);}
 
 dec: tydecs                               {$$=A_TypeDec(EM_tokPos, $1);}
-	| vardec                                  {$$=$1;}
+	| vardec                              {$$=$1;}
 	| fundecs                             {$$=A_FunctionDec(EM_tokPos, $1);}
 
 decs: dec                                 {$$=A_DecList($1, NULL);}

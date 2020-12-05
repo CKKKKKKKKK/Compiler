@@ -25,7 +25,7 @@ void adjust(void)
 * Please don't modify the lines above.
 * You can add C declarations of your own below.
 */
-int comment_counter = 0;
+int comment_count = 0;
 
 /* @function: getstr
  * @input: a string literal
@@ -38,74 +38,56 @@ char *getstr(const char *str)
   int i, j;
   int len = strlen(str);
 
-  if (len == 2) 
-  {
+  if (len == 2) {
     buf = "";
     return buf;
   }
 
-  buf = malloc(yyleng + 1);
+  buf = malloc(1024);
   i = 1;
   j = 0;
-  while (i < len - 1) 
-  {
-    if (i < len - 2 && str[i] == '\\') 
-    {
-      if (str[i+1] == 'n') 
-      {
+  while (i < len-1) {
+    if (i < len - 2 && str[i] == '\\') {
+      if (str[i+1] == 'n') {
         buf[j] = '\n';
         i += 2;
-      } 
-      else if (str[i+1] == 't') 
-      {
+      } else if (str[i+1] == 't') {
         buf[j] = '\t';
         i += 2;
-      } 
-      else if (str[i+1] >= '0' && str[i+1] <= '9') 
-      {
+      } else if (str[i+1] >= '0' && str[i+1] <= '9') {
         char c = (str[i+1]-'0')*10*10+(str[i+2]-'0')*10+str[i+3]-'0';
         buf[j] = c;
         i += 4;
-      } 
-      else if (str[i+1] == '\\') 
-      {
+      } else if (str[i+1] == '\\') {
         buf[j] = '\\';
         i += 2;
-      } 
-      else if (str[i+1] == '\"') 
-      {
+      } else if (str[i+1] == '\"') {
         buf[j] = '\"';
         i += 2;
-      } 
-      else if (str[i+1] == '^') 
-      {
+      } else if (str[i+1] == '^') {
         buf[j] = str[i+2] - 'A' + 1;
         i += 3;
-      } 
-      else 
-      {
+      } else {
         i++;
         while (i < len && str[i] != '\\') i++;
         i++;
         j--;
       }
-    } 
-    else 
-    {
+    } else {
       buf[j] = str[i];
       i++;
     }
     j++;
   }
   buf[j] = '\0';
+
 	return buf;
 }
 
 %}
-
   /* You can add lex definitions here. */
 
-%Start COMMENT STR
+%Start COMMENT
 
 %%
   /* 
@@ -155,30 +137,21 @@ char *getstr(const char *str)
 <INITIAL>"function" {adjust(); return FUNCTION;}
 <INITIAL>"var" {adjust(); return VAR;}
 <INITIAL>"type" {adjust(); return TYPE;}
+
 <INITIAL>\"(\\\"|[^"])*\" {
   adjust();
   yylval.sval = getstr(yytext);
   return STRING;
 }
-<INITIAL>[A-Za-z][A-Za-z0-9_]* {
-  adjust(); 
-  yylval.sval = String(yytext); 
-  return ID;
-  }
-<INITIAL>[0-9]+ {
-  adjust(); 
-  yylval.ival = atoi(yytext); 
-  return INT;
-}
-<INITIAL><<EOF>> {adjust(); yyterminate();}
-<INITIAL>. {adjust(); EM_error(charPos, "Illegal token.");}
+<INITIAL>[A-Za-z][A-Za-z0-9_]* {adjust(); yylval.sval = strdup(yytext); return ID;}
+<INITIAL>[0-9]+ {adjust(); yylval.ival = atoi(yytext); return INT;}
 
-<INITIAL>"/*" {adjust(); comment_counter++; BEGIN COMMENT;}
-<COMMENT>"/*" {adjust(); comment_counter++;}
+<INITIAL>"/*" {adjust(); comment_count++; BEGIN COMMENT;}
+<COMMENT>"/*" {adjust(); comment_count++;}
 <COMMENT>"*/" {
   adjust(); 
-  comment_counter--;
-  if (comment_counter == 0) {
+  comment_count--;
+  if (comment_count == 0) {
     BEGIN INITIAL;
   }
 }
